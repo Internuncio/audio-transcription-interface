@@ -1,19 +1,20 @@
-var webpack = require('webpack')
-var path = require('path')
+const webpack = require('webpack');
+const path = require('path');
+
 module.exports = {
   entry: path.resolve(__dirname, 'app'),
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'public')
+    contentBase: path.resolve(__dirname, 'public'),
   },
   module: {
     loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']},
-      {test: /(\.css)$/, loaders: ['style-loader', 'css-loader']}
-    ]
-  }
-}
+      { test: /\.js$/, exclude: /node_modules/, use: [{ loader: 'babel-loader' }] },
+      { test: /(\.css)$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader' }] },
+    ],
+  },
+};
