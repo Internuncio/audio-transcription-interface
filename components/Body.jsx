@@ -9,7 +9,7 @@ export default class Body extends React.Component {
       <div>
         <Formatter />
         <Transcription />
-        <Controller />
+        <Controller audioUrl="https://wetranscribe.s3.amazonaws.com/uploads/chunk/audio/600/converted.wavchunk-4.wav" />
       </div>
     );
   }
