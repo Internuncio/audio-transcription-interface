@@ -10,9 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "plyr": "^3.4.4",
+    "prop-types": "^15.6.2",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "plyr": "^3.4.4"
+    "react-dom": "^16.5.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

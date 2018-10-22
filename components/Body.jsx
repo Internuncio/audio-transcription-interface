@@ -2,14 +2,48 @@ import React from 'react';
 import Controller from './Controller.jsx';
 import Formatter from './Formatter.jsx';
 import Transcription from './Transcription.jsx';
+import Form from './Form.jsx';
+
 
 export default class Body extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleDataChange = this.handleDataChange.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
+
+    this.state = {
+      data: '{}',
+      currentTime: 0,
+    };
+  }
+
+  handleDataChange(value) {
+    this.setState({ data: value });
+  }
+
+  handleTimeChange(value) {
+    this.setState({ currentTime: value });
+  }
+
   render() {
+    const {
+      data,
+      currentTime,
+    } = this.state;
+
     return (
       <div>
         <Formatter />
-        <Transcription />
-        <Controller audioUrl="https://wetranscribe.s3.amazonaws.com/uploads/chunk/audio/600/converted.wavchunk-4.wav" />
+        <Transcription
+          onTranscriptionChange={this.handleDataChange}
+          value={data}
+          currentTime={currentTime}
+        />
+        <Controller
+          audioUrl="https://s3.amazonaws.com/wetranscribe/uploads/chunk/audio/575/converted.wavchunk-60.wav"
+          onTimeUpdate={this.handleTimeChange}
+        />
+        <Form assignmentId="xxx" data={data} submitUrl="www.google.ca" />
       </div>
     );
   }
