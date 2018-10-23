@@ -4,6 +4,7 @@ import Formatter from './Formatter.jsx';
 import Transcription from './Transcription.jsx';
 import Form from './Form.jsx';
 
+import QS from 'uqs'
 
 export default class Body extends React.Component {
   constructor(props) {
@@ -36,6 +37,24 @@ export default class Body extends React.Component {
       currentTime,
     } = this.state;
 
+    const query = QS.parse(window.location.search)
+
+    let {
+      submitUrl,
+    } = query;
+
+    const {
+      turkSubmitTo,
+      assignmentId,
+      audioUrl,
+    } = query;
+
+
+    if (submitUrl == null) {
+      submitUrl = turkSubmitTo;
+    }
+
+
     return (
       <div>
         <Formatter />
@@ -45,10 +64,10 @@ export default class Body extends React.Component {
           currentTime={currentTime}
         />
         <Controller
-          audioUrl="https://s3.amazonaws.com/wetranscribe/uploads/chunk/audio/575/converted.wavchunk-60.wav"
+          audioUrl={audioUrl}
           onTimeUpdate={this.handleTimeChange}
         />
-        <Form assignmentId="xxx" data={JSON.stringify(data)} submitUrl="www.google.ca" />
+        <Form assignmentId={assignmentId} data={JSON.stringify(data)} submitUrl={submitUrl} />
       </div>
     );
   }
