@@ -12,7 +12,7 @@ export default class Body extends React.Component {
     this.handleTimeChange = this.handleTimeChange.bind(this);
 
     this.state = {
-      data: '{}',
+      data: [{ start: '', text: '', subject: '' }],
       currentTime: 0,
     };
   }
@@ -36,14 +36,14 @@ export default class Body extends React.Component {
         <Formatter />
         <Transcription
           onTranscriptionChange={this.handleDataChange}
-          value={data}
+          value={data.map(x => x.text).join("\n")}
           currentTime={currentTime}
         />
         <Controller
           audioUrl="https://s3.amazonaws.com/wetranscribe/uploads/chunk/audio/575/converted.wavchunk-60.wav"
           onTimeUpdate={this.handleTimeChange}
         />
-        <Form assignmentId="xxx" data={data} submitUrl="www.google.ca" />
+        <Form assignmentId="xxx" data={JSON.stringify(data)} submitUrl="www.google.ca" />
       </div>
     );
   }

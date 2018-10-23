@@ -16,7 +16,7 @@ export default class Transcription extends React.Component {
   handleChange(event) {
     const { onTranscriptionChange } = this.props;
     this.setState({ cursorPosition: event.target.selectionStart });
-    onTranscriptionChange(event.target.value);
+    onTranscriptionChange(this.parse(event.target.value));
   }
 
   handleClick(event) {
@@ -29,11 +29,36 @@ export default class Transcription extends React.Component {
     const newValue = value.slice(0, cursorPosition)
       + this.formatTime(currentTime)
       + value.slice(cursorPosition);
-    onTranscriptionChange(newValue);
+    onTranscriptionChange(this.parse(newValue));
   }
 
   formatTime(seconds) {
-    return Math.floor(seconds);
+    return '{' + Math.floor(seconds) + '}';
+  }
+
+  parse(text) {
+    const linesRegexp = /\n/;
+    const lines = text.split(linesRegexp);
+
+    return lines.map(line => this.parseLine(line));
+  }
+
+  parseLine(line) {
+    const subjectRegexp = /\[(.*?)\]/;
+    const timestampsRegexp = /{(.*?)}/;
+
+    let subjects = line.match(subjectRegexp);
+    let timestamps = line.match(timestampsRegexp);
+
+    if (subjects == null) {
+      subjects = [''];
+    }
+
+    if (timestamps == null) {
+      timestamps = [''];
+    }
+
+    return { subject: subjects[0], start: timestamps[0], text: line };
   }
 
   render() {
