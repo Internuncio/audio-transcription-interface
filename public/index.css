@@ -1,0 +1,45 @@
+body {
+  color: #673ab7;
+  font-size: 14px;
+}
+
+textarea {
+  max-width: 100%;
+  min-width: 90%;
+  min-height: 200px;
+  border: 1px solid #673ab7;
+  padding: 1em;
+}
+
+div#app {
+  max-width: 980px;
+  margin: 0 auto;
+  display: block;
+  border: 2px solid #673ab7;
+  padding: 2em;
+}
+
+section.transcription {
+  margin-bottom: 2em;
+}
+
+section.header {
+  margin-bottom: 2em;
+}
+
+button {
+  color: #673ab7;
+  border: 1px solid #673ab7;
+  font-size: 1em;
+  padding: 0.25em 0.5em;
+  border-radius: 5px;
+  margin: 1em 0;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #673ab7;
+  color: white;
+}

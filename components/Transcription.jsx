@@ -89,7 +89,7 @@ export default class Transcription extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <section className="transcription">
         <textarea
           value={value}
           onChange={this.handleChange}
@@ -97,7 +97,7 @@ export default class Transcription extends React.Component {
           onKeyUp={this.handleKeyPress}
         />
         <button type="button" onClick={this.addTimestamp}>Add Timestamp</button>
-      </div>
+      </section>
     );
   }
 }
