@@ -12,7 +12,12 @@ export default class Body extends React.Component {
     this.handleTimeChange = this.handleTimeChange.bind(this);
 
     this.state = {
-      data: [{ start: '', text: '', subject: '' }],
+      data: [{
+        start: '0',
+        rawText: '{0}[Subject 1]: ',
+        text: '',
+        subject: 'Subject 1',
+      }],
       currentTime: 0,
     };
   }
@@ -36,7 +41,7 @@ export default class Body extends React.Component {
         <Formatter />
         <Transcription
           onTranscriptionChange={this.handleDataChange}
-          value={data.map(x => x.text).join("\n")}
+          value={data.map(x => x.rawText).join('\n')}
           currentTime={currentTime}
         />
         <Controller

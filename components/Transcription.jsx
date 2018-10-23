@@ -6,6 +6,7 @@ export default class Transcription extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.addTimestamp = this.addTimestamp.bind(this);
 
     this.state = {
@@ -21,6 +22,22 @@ export default class Transcription extends React.Component {
 
   handleClick(event) {
     this.setState({ cursorPosition: event.target.selectionStart });
+  }
+
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      this.addNewLine();
+    }
+  }
+
+  addNewLine() {
+    const { cursorPosition } = this.state;
+    const { onTranscriptionChange, currentTime, value } = this.props;
+    const newValue = value.slice(0, cursorPosition)
+      + this.formatTime(currentTime)
+      + '[Speaker 1]: '
+      + value.slice(cursorPosition);
+    onTranscriptionChange(this.parse(newValue));
   }
 
   addTimestamp() {
@@ -44,21 +61,26 @@ export default class Transcription extends React.Component {
   }
 
   parseLine(line) {
-    const subjectRegexp = /\[(.*?)\]/;
+    const subjectRegexp = /\[(.*?)\]:/;
     const timestampsRegexp = /{(.*?)}/;
 
     let subjects = line.match(subjectRegexp);
     let timestamps = line.match(timestampsRegexp);
 
     if (subjects == null) {
-      subjects = [''];
+      subjects = ['', ''];
     }
 
     if (timestamps == null) {
-      timestamps = [''];
+      timestamps = ['', ''];
     }
 
-    return { subject: subjects[0], start: timestamps[0], text: line };
+    return {
+      subject: subjects[1],
+      start: timestamps[1],
+      rawText: line,
+      text: line.split(subjectRegexp).pop(),
+    };
   }
 
   render() {
@@ -68,7 +90,12 @@ export default class Transcription extends React.Component {
 
     return (
       <div>
-        <textarea value={value} onChange={this.handleChange} onClick={this.handleClick} />
+        <textarea
+          value={value}
+          onChange={this.handleChange}
+          onClick={this.handleClick}
+          onKeyUp={this.handleKeyPress}
+        />
         <button type="button" onClick={this.addTimestamp}>Add Timestamp</button>
       </div>
     );
