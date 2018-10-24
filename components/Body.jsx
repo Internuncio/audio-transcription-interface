@@ -37,7 +37,7 @@ export default class Body extends React.Component {
       currentTime,
     } = this.state;
 
-    const query = QS.parse(window.location.search)
+    const query = QS.parse(window.location.search);
 
     let {
       submitUrl,
@@ -51,7 +51,7 @@ export default class Body extends React.Component {
 
 
     if (submitUrl == null) {
-      submitUrl = turkSubmitTo;
+      submitUrl = turkSubmitTo + '/mturk/externalSubmit';
     }
 
 

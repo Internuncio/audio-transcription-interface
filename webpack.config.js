@@ -9,7 +9,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
 });
 
 const copyWebpackPlugin = new CopyWebpackPlugin([
-  'styles/app.css',
+  './app.css',
 ], {});
 
 module.exports = {

@@ -13,7 +13,6 @@ export default class Form extends React.Component {
       <form
         action={submitUrl}
         method="POST"
-        target="_top"
       >
         <input
           type="hidden"
