@@ -12,24 +12,24 @@ export default class Body extends React.Component {
     this.handleDataChange = this.handleDataChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
 
-    const defaultData = {
+    const defaultData = [{
       start: '0',
       rawText: '{0}[Subject 1]: ',
       text: '',
       subject: 'Subject 1',
-    };
+    }];
 
     const query = QS.parse(window.location.search);
     let { data } = query;
 
-    if (data == null) {
+    if (data === undefined) {
       data = defaultData;
+    } else {
+      data = JSON.parse(data);
     }
 
     this.state = {
-      data: [
-        data,
-      ],
+      data: data,
       currentTime: 0,
     };
   }
@@ -51,7 +51,7 @@ export default class Body extends React.Component {
     const query = QS.parse(window.location.search);
 
     let {
-      submitUrl,
+      submitTo,
     } = query;
 
     const {
@@ -61,8 +61,8 @@ export default class Body extends React.Component {
     } = query;
 
 
-    if (submitUrl == null) {
-      submitUrl = turkSubmitTo + '/mturk/externalSubmit';
+    if (submitTo == null) {
+      submitTo = turkSubmitTo + '/mturk/externalSubmit';
     }
 
 
@@ -78,7 +78,7 @@ export default class Body extends React.Component {
           audioUrl={audioUrl}
           onTimeUpdate={this.handleTimeChange}
         />
-        <Form assignmentId={assignmentId} data={JSON.stringify(data)} submitUrl={submitUrl} />
+        <Form assignmentId={assignmentId} data={JSON.stringify(data)} submitUrl={submitTo} />
       </div>
     );
   }
