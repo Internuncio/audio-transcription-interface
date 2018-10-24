@@ -12,13 +12,24 @@ export default class Body extends React.Component {
     this.handleDataChange = this.handleDataChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
 
+    const defaultData = {
+      start: '0',
+      rawText: '{0}[Subject 1]: ',
+      text: '',
+      subject: 'Subject 1',
+    };
+
+    const query = QS.parse(window.location.search);
+    let { data } = query;
+
+    if (data == null) {
+      data = defaultData;
+    }
+
     this.state = {
-      data: [{
-        start: '0',
-        rawText: '{0}[Subject 1]: ',
-        text: '',
-        subject: 'Subject 1',
-      }],
+      data: [
+        data,
+      ],
       currentTime: 0,
     };
   }
